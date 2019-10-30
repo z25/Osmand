@@ -60,6 +60,8 @@ import net.osmand.data.QuadRect;
 import net.osmand.data.RotatedTileBox;
 import net.osmand.map.MapTileDownloader.DownloadRequest;
 import net.osmand.map.MapTileDownloader.IMapDownloaderCallback;
+import net.osmand.map.TileSourceManager;
+import net.osmand.map.TileSourceManager.TileSourceTemplate;
 import net.osmand.plus.AppInitializer;
 import net.osmand.plus.AppInitializer.AppInitializeListener;
 import net.osmand.plus.AppInitializer.InitEvents;
@@ -114,6 +116,7 @@ import net.osmand.plus.measurementtool.MeasurementEditingContext;
 import net.osmand.plus.measurementtool.MeasurementToolFragment;
 import net.osmand.plus.measurementtool.NewGpxData;
 import net.osmand.plus.profiles.EditProfileFragment;
+import net.osmand.plus.quickaction.QuickActionListFragment;
 import net.osmand.plus.render.RendererRegistry;
 import net.osmand.plus.resources.ResourceManager;
 import net.osmand.plus.routepreparationmenu.ChooseRouteFragment;
@@ -151,6 +154,7 @@ import org.apache.commons.logging.Log;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,7 +235,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 	private boolean stopped = true;
 
 	private ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-	
+
 	private LockHelper lockHelper;
 
 	@Override
@@ -253,7 +257,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 		trackDetailsMenu.setMapActivity(this);
 
 		super.onCreate(savedInstanceState);
-		
+
 		if (Version.isHuawei(getMyApplication())) {
 			HuaweiDrmHelper.check(this);
 		}
@@ -290,7 +294,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 		}
 		dashboardOnMap.createDashboardView();
 		checkAppInitialization();
-		parseLaunchIntentLocation();
+		parseLaunchIntents();
 		mapView.setTrackBallDelegate(new OsmandMapTileView.OnTrackBallListener() {
 			@Override
 			public boolean onTrackBallEvent(MotionEvent e) {
@@ -352,7 +356,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 		registerReceiver(screenOffReceiver, filter);
 
 		app.getAidlApi().onCreateMapActivity(this);
-		
+
 		lockHelper.setLockUIAdapter(this);
 
 		mIsDestroyed = false;
@@ -370,9 +374,6 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 	protected void onSaveInstanceState(Bundle outState) {
 		if (removeFragment(PlanRouteFragment.TAG)) {
 			app.getMapMarkersHelper().getPlanRouteContext().setFragmentVisible(true);
-		}
-		if (trackDetailsMenu.isVisible()) {
-			trackDetailsMenu.dismiss(false);
 		}
 		removeFragment(ImportGpxBottomSheetDialogFragment.TAG);
 		removeFragment(AdditionalActionsBottomSheetDialogFragment.TAG);
@@ -682,8 +683,13 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 			prevActivityIntent = null;
 			return;
 		}
-		if (getMapView().getLayerByClass(MapQuickActionLayer.class).onBackPressed())
+		if (getMapView().getLayerByClass(MapQuickActionLayer.class).onBackPressed()) {
 			return;
+		}
+		QuickActionListFragment quickActionListFragment = getQuickActionListFragment();
+		if ( quickActionListFragment != null && quickActionListFragment.isVisible()) {
+			this.getDashboard().setDashboardVisibility(true, DashboardType.CONFIGURE_SCREEN, null);
+		}
 
 		super.onBackPressed();
 	}
@@ -696,7 +702,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		parseLaunchIntentLocation();
+		parseLaunchIntents();
 	}
 
 	@Override
@@ -1395,7 +1401,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 			atlasMapRendererView.handleOnDestroy();
 		}
 		lockHelper.setLockUIAdapter(null);
-		
+
 		mIsDestroyed = true;
 	}
 
@@ -1433,6 +1439,9 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 	private void onPauseActivity() {
 		if (!app.getRoutingHelper().isRouteWasFinished()) {
 			DestinationReachedMenu.resetShownState();
+		}
+		if (trackDetailsMenu.isVisible()) {
+			trackDetailsMenu.dismiss(false);
 		}
 		pendingPause = false;
 		mapView.setOnDrawMapListener(null);
@@ -1634,8 +1643,15 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 		return mapViewTrackingUtilities;
 	}
 
+	private boolean parseLaunchIntents() {
+		boolean applied = parseLocationIntent();
+		if (!applied) {
+			applied = parseTileSourceIntent();
+		}
+		return applied;
+	}
 
-	protected void parseLaunchIntentLocation() {
+	private boolean parseLocationIntent() {
 		Intent intent = getIntent();
 		if (intent != null && intent.getData() != null) {
 			Uri data = intent.getData();
@@ -1658,8 +1674,38 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 					}
 				}
 				setIntent(null);
+				return true;
 			}
 		}
+		return false;
+	}
+
+	private boolean parseTileSourceIntent() {
+		Intent intent = getIntent();
+		if (intent != null && intent.getData() != null) {
+			Uri data = intent.getData();
+			if (("http".equalsIgnoreCase(data.getScheme()) || "https".equalsIgnoreCase(data.getScheme())) && data.getHost() != null && data.getHost().contains("osmand.net") &&
+					data.getPath() != null && data.getPath().startsWith("/add-tile-source")) {
+				Map<String, String> attrs = new HashMap<>();
+				for (String name : data.getQueryParameterNames()) {
+					attrs.put(name, data.getQueryParameter(name));
+				}
+				if (!attrs.isEmpty()) {
+					try {
+						TileSourceTemplate r = TileSourceManager.createTileSourceTemplate(attrs);
+						if (r != null && settings.installTileSource(r)) {
+							Toast.makeText(this, getString(R.string.edit_tilesource_successfully, r.getName()),
+									Toast.LENGTH_SHORT).show();
+						}
+					} catch (Exception e) {
+						LOG.error("parseAddTileSourceIntent error", e);
+					}
+				}
+				setIntent(null);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public MapActivityActions getMapActions() {
@@ -2257,28 +2303,32 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 	}
 
 	public QuickSearchDialogFragment getQuickSearchDialogFragment() {
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(QuickSearchDialogFragment.TAG);
-		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (QuickSearchDialogFragment) fragment : null;
+		return getFragment(QuickSearchDialogFragment.TAG);
 	}
 
 	public PlanRouteFragment getPlanRouteFragment() {
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(PlanRouteFragment.TAG);
-		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (PlanRouteFragment) fragment : null;
+		return getFragment(PlanRouteFragment.TAG);
 	}
 
 	public MeasurementToolFragment getMeasurementToolFragment() {
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(MeasurementToolFragment.TAG);
-		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (MeasurementToolFragment) fragment : null;
+		return getFragment(MeasurementToolFragment.TAG);
 	}
 
 	public ChooseRouteFragment getChooseRouteFragment() {
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(ChooseRouteFragment.TAG);
-		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (ChooseRouteFragment) fragment : null;
+		return getFragment(ChooseRouteFragment.TAG);
 	}
 
 	public EditProfileFragment getEditProfileFragment() {
-		Fragment fragment = getSupportFragmentManager().findFragmentByTag(EditProfileFragment.TAG);
-		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (EditProfileFragment) fragment : null;
+		return getFragment(EditProfileFragment.TAG);
+	}
+
+	public QuickActionListFragment getQuickActionListFragment() {
+		return  getFragment(QuickActionListFragment.TAG);
+	}
+
+	<T> T getFragment(String fragmentTag){
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
+		return fragment != null && !fragment.isDetached() && !fragment.isRemoving() ? (T) fragment : null;
 	}
 
 	public boolean isTopToolbarActive() {

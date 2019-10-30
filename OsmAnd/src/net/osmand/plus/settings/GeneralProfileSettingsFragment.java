@@ -1,5 +1,6 @@
 package net.osmand.plus.settings;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,7 @@ import net.osmand.plus.ApplicationMode;
 import net.osmand.plus.OsmandSettings;
 import net.osmand.plus.OsmandSettings.CommonPreference;
 import net.osmand.plus.R;
+import net.osmand.plus.UiUtilities;
 import net.osmand.plus.base.MapViewTrackingUtilities;
 import net.osmand.plus.helpers.FontCache;
 import net.osmand.plus.settings.bottomsheets.ChangeGeneralProfilesPrefBottomSheet;
@@ -33,6 +35,7 @@ import net.osmand.plus.settings.preferences.ListPreferenceEx;
 import net.osmand.plus.settings.preferences.SwitchPreferenceEx;
 import net.osmand.plus.widgets.style.CustomTypefaceSpan;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,7 +125,7 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 	}
 
 	private Drawable getOsmandThemeIcon() {
-		return getIcon(settings.isLightContent() ? R.drawable.ic_action_sun : R.drawable.ic_action_moon);
+		return getContentIcon(settings.isLightContent() ? R.drawable.ic_action_sun : R.drawable.ic_action_moon);
 	}
 
 	private void setupRotateMapPref() {
@@ -135,11 +138,11 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 	private Drawable getRotateMapIcon() {
 		switch (settings.ROTATE_MAP.get()) {
 			case OsmandSettings.ROTATE_MAP_NONE:
-				return getIcon(R.drawable.ic_action_direction_north);
+				return getContentIcon(R.drawable.ic_action_direction_north);
 			case OsmandSettings.ROTATE_MAP_BEARING:
-				return getIcon(R.drawable.ic_action_direction_movement);
+				return getContentIcon(R.drawable.ic_action_direction_movement);
 			default:
-				return getIcon(R.drawable.ic_action_direction_compass);
+				return getContentIcon(R.drawable.ic_action_direction_compass);
 		}
 	}
 
@@ -163,11 +166,11 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 	private Drawable getMapScreenOrientationIcon() {
 		switch (settings.MAP_SCREEN_ORIENTATION.get()) {
 			case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-				return getIcon(R.drawable.ic_action_phone_portrait_orientation);
+				return getContentIcon(R.drawable.ic_action_phone_portrait_orientation);
 			case ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE:
-				return getIcon(R.drawable.ic_action_phone_landscape_orientation);
+				return getContentIcon(R.drawable.ic_action_phone_landscape_orientation);
 			default:
-				return getIcon(R.drawable.ic_action_phone_device_orientation);
+				return getContentIcon(R.drawable.ic_action_phone_device_orientation);
 		}
 	}
 
@@ -190,7 +193,7 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 		ListPreferenceEx unitsOfLength = (ListPreferenceEx) findPreference(settings.METRIC_SYSTEM.getId());
 		unitsOfLength.setEntries(entries);
 		unitsOfLength.setEntryValues(entryValues);
-		unitsOfLength.setIcon(getIcon(R.drawable.ic_action_ruler_unit));
+		unitsOfLength.setIcon(getContentIcon(R.drawable.ic_action_ruler_unit));
 	}
 
 	private void setupCoordinatesFormatPref() {
@@ -220,7 +223,7 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 		ListPreferenceEx angularUnits = (ListPreferenceEx) findPreference(settings.ANGULAR_UNITS.getId());
 		angularUnits.setEntries(entries);
 		angularUnits.setEntryValues(entryValues);
-		angularUnits.setIcon(getIcon(R.drawable.ic_action_angular_unit));
+		angularUnits.setIcon(getContentIcon(R.drawable.ic_action_angular_unit));
 	}
 
 	private void setupSpeedSystemPref() {
@@ -275,7 +278,8 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 	}
 
 	private void showDrivingRegionDialog() {
-		final AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
+		Context themedContext = UiUtilities.getThemedContext(getActivity(), isNightMode());
+		AlertDialog.Builder b = new AlertDialog.Builder(themedContext);
 
 		b.setTitle(getString(R.string.driving_region));
 
@@ -296,14 +300,13 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 
 		final int selected = sel;
 		final ArrayAdapter<OsmandSettings.DrivingRegion> singleChoiceAdapter =
-				new ArrayAdapter<OsmandSettings.DrivingRegion>(getActivity(), R.layout.single_choice_description_item, R.id.text1, drs) {
+				new ArrayAdapter<OsmandSettings.DrivingRegion>(themedContext, R.layout.single_choice_description_item, R.id.text1, drs) {
 					@NonNull
 					@Override
 					public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 						View v = convertView;
 						if (v == null) {
-							LayoutInflater inflater = getActivity().getLayoutInflater();
-							v = inflater.inflate(R.layout.single_choice_description_item, parent, false);
+							v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_choice_description_item, parent, false);
 						}
 						OsmandSettings.DrivingRegion item = getItem(position);
 						AppCompatCheckedTextView title = (AppCompatCheckedTextView) v.findViewById(R.id.text1);
@@ -358,8 +361,8 @@ public class GeneralProfileSettingsFragment extends BaseSettingsFragment impleme
 		OsmandSettings.OsmandPreference pref = settings.getPreference(prefId);
 		if (pref instanceof CommonPreference && !((CommonPreference) pref).hasDefaultValueForMode(getSelectedAppMode())) {
 			FragmentManager fragmentManager = getFragmentManager();
-			if (fragmentManager != null) {
-				ChangeGeneralProfilesPrefBottomSheet.showInstance(fragmentManager, prefId, newValue, this, false);
+			if (fragmentManager != null && newValue instanceof Serializable) {
+				ChangeGeneralProfilesPrefBottomSheet.showInstance(fragmentManager, prefId, (Serializable) newValue, this, false);
 			}
 			return false;
 		}

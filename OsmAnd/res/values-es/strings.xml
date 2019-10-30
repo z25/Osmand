@@ -3325,4 +3325,44 @@
     <string name="routeInfo_piste_difficulty_name">Dificultad de pista</string>
     <string name="routing_attr_width_name">Límite de anchura</string>
     <string name="routing_attr_width_description">Especifica el límite permitido de anchura del vehículo en rutas.</string>
+    <string name="release_3_5">• Ajustes de la aplicación y del perfil actualizados. Cómoda distribución de los ajustes por tipo y posibilidad de personalizar cada perfil
+\n
+\n • Nuevo cuadro de diálogo de descarga de mapas que sugiere un mapa para descargar mientras se navega
+\n
+\n • Arreglos en el tema nocturno
+\n
+\n • Se corrigieron algunos problemas de enrutamiento en todo el mundo
+\n
+\n • Se ha actualizado el mapa base con más detalles en la red de caminos.
+\n
+\n • Se corrigieron las zonas inundadas en todo el mundo
+\n
+\n • Enrutamiento de esquí: perfil de altura y complejidad de la ruta añadidos a los detalles de la ruta
+\n
+\n • Otras correcciones de errores
+\n
+\n</string>
+    <string name="change_data_storage_full_description">"Mover los archivos de datos de OsmAnd  al nuevo destino\?
+\n%1$s &gt; %2$s"</string>
+    <string name="data_storage_preference_summary">%1$s • %2$s</string>
+    <string name="data_storage_space_description">Libre %1$s GB • Total %2$s GB</string>
+    <string name="change_osmand_data_folder_question">¿Cambiar la carpeta de datos de Osmand\?</string>
+    <string name="rendering_attr_piste_type_hike_name">Caminata</string>
+    <string name="rendering_attr_piste_type_connection_name">Conexión</string>
+    <string name="avoid_in_routing_descr_">Evitar ciertas rutas y tipos de carreteras</string>
+    <string name="rendering_attr_piste_difficulty_connection_name">Conexión</string>
+    <string name="shared_string_calculate">Calcular</string>
+    <string name="shared_string_maps">Mapas</string>
+    <string name="shared_string_memory_tb_desc">%1$s TB</string>
+    <string name="shared_string_memory_gb_desc">%1$s GB</string>
+    <string name="shared_string_memory_mb_desc">%1$s MB</string>
+    <string name="shared_string_memory_kb_desc">%1$s kB</string>
+    <string name="shared_string_memory_used_tb_desc">Usado %1$s TB</string>
+    <string name="shared_string_memory_used_gb_desc">Usado %1$s GB</string>
+    <string name="shared_string_memory_used_mb_desc">Usado %1$s MB</string>
+    <string name="shared_string_memory_used_kb_desc">Usado %1$s kB</string>
+    <string name="routing_attr_prefer_unpaved_name">Preferir caminos sin asfaltar</string>
+    <string name="routing_attr_prefer_unpaved_description">Preferir caminos sin asfaltar.</string>
+    <string name="update_all_maps">Actualizar todos los mapas</string>
+    <string name="update_all_maps_q">¿Estás seguro de que quieres actualizar todos (%1$d) los mapas\?</string>
 </resources>

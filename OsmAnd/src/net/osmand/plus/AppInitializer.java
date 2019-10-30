@@ -106,7 +106,7 @@ public class AppInitializer implements IProgress {
 	private static final String VERSION_INSTALLED = "VERSION_INSTALLED"; //$NON-NLS-1$
 	private static final String EXCEPTION_FILE_SIZE = "EXCEPTION_FS"; //$NON-NLS-1$
 
-	public static final String LATEST_CHANGES_URL = "https://osmand.net/blog/osmand-3-4-released";
+	public static final String LATEST_CHANGES_URL = "https://osmand.net/blog/osmand-3-5-released";
 //	public static final String LATEST_CHANGES_URL = null; // not enough to read
 	public static final int APP_EXIT_CODE = 4;
 	public static final String APP_EXIT_KEY = "APP_EXIT_KEY";
@@ -457,7 +457,12 @@ public class AppInitializer implements IProgress {
 	public void onCreateApplication() {
 		// always update application mode to default
 		OsmandSettings osmandSettings = app.getSettings();
-		if (!osmandSettings.FOLLOW_THE_ROUTE.get()) {
+		if (osmandSettings.FOLLOW_THE_ROUTE.get()) {
+			ApplicationMode savedMode = osmandSettings.readApplicationMode();
+			if (!osmandSettings.APPLICATION_MODE.get().getStringKey().equals(savedMode.getStringKey())) {
+				osmandSettings.APPLICATION_MODE.set(savedMode);
+			}
+		} else {
 			osmandSettings.APPLICATION_MODE.set(osmandSettings.DEFAULT_APPLICATION_MODE.get());
 		}
 		startTime = System.currentTimeMillis();
