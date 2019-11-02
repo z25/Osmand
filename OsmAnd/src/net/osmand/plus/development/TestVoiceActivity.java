@@ -144,8 +144,8 @@ public class TestVoiceActivity extends OsmandActionBarActivity {
 //			v += "\n \u25CF Voice language availability: Recorded voice";
 //			v += "\n \u25CF Voice actually used: Recorded voice";
 //		}
-		v += "\n \u25CF TTS voice language availability: " + TTSCommandPlayerImpl.getTtsVoiceStatus().equals("") ? "-" : TTSCommandPlayerImpl.getTtsVoiceStatus();
-		v += "\n \u25CF TTS voice actually used: " + TTSCommandPlayerImpl.getTtsVoiceUsed().equals("") ? "-" : TTSCommandPlayerImpl.getTtsVoiceUsed();
+		v += "\n \u25CF TTS voice language availability: " + (TTSCommandPlayerImpl.getTtsVoiceStatus().equals("") ? "-" : TTSCommandPlayerImpl.getTtsVoiceStatus());
+		v += "\n \u25CF TTS voice actually used: " + (TTSCommandPlayerImpl.getTtsVoiceUsed().equals("") ? "-" : TTSCommandPlayerImpl.getTtsVoiceUsed());
 
 		if (((OsmandApplication) getApplication()).getSettings().AUDIO_STREAM_GUIDANCE.get() == 0) {
 			v += "\n \u25CF BT SCO: " + AbstractPrologCommandPlayer.btScoInit;
