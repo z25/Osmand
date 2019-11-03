@@ -448,12 +448,18 @@ public class OsmandSettings {
 
 		@Override
 		public boolean writeToJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			return writeAppModeToJson(json, this);
+			if (appMode == null) {
+				return writeAppModeToJson(json, this);
+			} else {
+				return true;
+			}
 		}
 
 		@Override
 		public void readFromJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			readAppModeFromJson(json, this);
+			if (appMode == null) {
+				readAppModeFromJson(json, this);
+			}
 		}
 
 		@Override
@@ -1162,12 +1168,18 @@ public class OsmandSettings {
 
 		@Override
 		public boolean writeToJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			return writeAppModeToJson(json, this);
+			if (appMode == null) {
+				return writeAppModeToJson(json, this);
+			} else {
+				return true;
+			}
 		}
 
 		@Override
 		public void readFromJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			readAppModeFromJson(json, this);
+			if (appMode == null) {
+				readAppModeFromJson(json, this);
+			}
 		}
 
 		@Override
@@ -1204,12 +1216,18 @@ public class OsmandSettings {
 
 		@Override
 		public boolean writeToJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			return writeAppModeToJson(json, this);
+			if (appMode == null) {
+				return writeAppModeToJson(json, this);
+			} else {
+				return true;
+			}
 		}
 
 		@Override
 		public void readFromJson(JSONObject json, ApplicationMode appMode) throws JSONException {
-			readAppModeFromJson(json, this);
+			if (appMode == null) {
+				readAppModeFromJson(json, this);
+			}
 		}
 
 		@Override
@@ -1559,8 +1577,8 @@ public class OsmandSettings {
 	// dev version
 	public final CommonPreference<Boolean> DISABLE_COMPLEX_ROUTING = new BooleanPreference("disable_complex_routing", false).makeGlobal();
 	public final CommonPreference<Boolean> ENABLE_TIME_CONDITIONAL_ROUTING = new BooleanPreference("enable_time_conditional_routing", true).makeProfile();
-	public final CommonPreference<Boolean> SIMULATE_NAVIGATION = new BooleanPreference("simulate_navigation", false).makeGlobal().cache();
-	public final CommonPreference<Boolean> SIMULATE_NAVIGATION_GPX = new BooleanPreference("simulate_navigation_gpx", false).makeGlobal().cache();
+
+	public boolean simulateNavigation = false;
 
 	public final CommonPreference<Boolean> SHOW_ROUTING_ALARMS = new BooleanPreference("show_routing_alarms", true).makeProfile().cache();
 
