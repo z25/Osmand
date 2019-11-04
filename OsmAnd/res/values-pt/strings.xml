@@ -2136,7 +2136,8 @@
 \nDê-nos a sua opinião</string>
     <string name="commiting_way">Cometendo caminho…</string>
     <string name="increase_search_radius_to">Aumentar o raio de pesquisa para %1$s</string>
-    <string name="send_search_query_description"> string name=\"lat_lon_pattern\"&gt;Lat: %1$.5f Lon: %2$.5f&lt;/string </string>
+    <string name="send_search_query_description">Enviaremos a sua consulta de pesquisa: \"%1$s\" e a sua localização.
+        \nNenhuma informação pessoal é recolhida. Os dados de pesquisa só servem para melhorar o algoritmo de pesquisa.</string>
     <string name="send_search_query">Enviar a consulta de pesquisa?</string>
     <string name="shared_string_world">Mundo</string>
     <string name="point_deleted">Ponto %1$s eliminado</string>
@@ -2240,10 +2241,8 @@
     <string name="welcome_to_open_beta">Bem-vindo ao beta aberto</string>
     <string name="wikivoyage_travel_guide">Guias de viagem</string>
     <string name="wikivoyage_travel_guide_descr">Guias para os lugares mais interessantes do mundo dentro do OsmAnd, sem uma conexão com a Internet.</string>
-    <string name="monthly_map_updates">Atualizações de mapa: <b>a cada mês</b>
-    </string>
-    <string name="daily_map_updates">Atualizações de mapa: <b>a cada hora</b>
-    </string>
+    <string name="monthly_map_updates">Atualizações de mapa: a cada mês</string>
+    <string name="daily_map_updates">Atualizações de mapa: a cada hora</string>
     <string name="in_app_purchase">Compra na aplicação</string>
     <string name="in_app_purchase_desc">Pagamento de uma só vez</string>
     <string name="in_app_purchase_desc_ex">Uma vez comprado, estará sempre disponível para si.</string>
@@ -3326,18 +3325,18 @@
     <string name="shared_string_memory_mb_desc">%1$s MB</string>
     <string name="shared_string_memory_kb_desc">%1$s kB</string>
     <string name="rendering_attr_piste_difficulty_aerialway_name">Via aérea</string>
-    <string name="track_storage_directory">Diretório de Armazenamento de Caminhos</string>
+    <string name="track_storage_directory">Diretório de armazenamento de caminhos</string>
     <string name="track_storage_directory_descrp">Os caminhos podem ser armazenados na pasta rec ou em pastas mensais, ou diárias.</string>
-    <string name="store_tracks_in_rec_directory">Armazenar os caminhos gravados na pasta rec</string>
-    <string name="store_tracks_in_daily_directories">Armazenar caminhos gravados em pastas diárias</string>
-    <string name="store_tracks_in_daily_directories_descrp">Armazenar caminhos gravados em subpastas por dia de gravação (como 2018-01-01).</string>
+    <string name="store_tracks_in_rec_directory">Gravar caminhos na pasta \'rec\'</string>
+    <string name="store_tracks_in_daily_directories">Gravar caminhos em pastas diárias</string>
+    <string name="store_tracks_in_daily_directories_descrp">Gravar caminhos em subpastas por dia de gravação (como 2018-01-01).</string>
     <string name="data_storage_preference_summary">%1$s • %2$s</string>
     <string name="data_storage_space_description">Livre %1$s GB • Total %2$s GB</string>
     <string name="shared_string_memory_used_tb_desc">%1$s TB usado(s)</string>
     <string name="shared_string_memory_used_gb_desc">%1$s GB usado(s)</string>
     <string name="shared_string_memory_used_mb_desc">%1$s MB usado(s)</string>
     <string name="shared_string_memory_used_kb_desc">%1$s kB usado(s)</string>
-    <string name="contour_lines_and_hillshade">Curvas de nível e Sombras de relevo</string>
+    <string name="contour_lines_and_hillshade">Curvas de nível e sombras de relevo</string>
     <string name="routing_attr_prefer_unpaved_name">Preferir estradas não pavimentadas</string>
     <string name="routing_attr_prefer_unpaved_description">Preferir estradas não pavimentadas.</string>
     <string name="update_all_maps">Atualizar todos os mapas</string>
