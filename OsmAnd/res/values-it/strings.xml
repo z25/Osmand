@@ -2814,8 +2814,8 @@ Rappresenta l\'area: %1$s x %2$s</string>
 \n</string>
     <string name="commiting_way">Sottoponi la via…</string>
     <string name="increase_search_radius_to">Aumenta il raggio di ricerca a %1$s</string>
-    <string name="send_search_query_description">Invieremo la tua ricerca \"%1$s\" oltre alla tua localizzazione.
-	    \nNon raccogliamo informazioni personali, i dati delle ricerche sono usati per migliorare l\'algoritmo di ricerca</string>
+    <string name="send_search_query_description">Invieremo la tua ricerca, assieme alla tua localizzazione a: \"%1$s\". 
+\nNon raccogliamo informazioni personali, i dati delle ricerche sono usati per migliorare l\'algoritmo di ricerca.</string>
     <string name="send_search_query">Inviare i dati delle ricerche?</string>
     <string name="shared_string_world">Mondo</string>
     <string name="point_deleted">Punto %1$s eliminato</string>
@@ -3134,7 +3134,6 @@ Rappresenta l\'area: %1$s x %2$s</string>
     <string name="base_profile_descr_aircraft">Aereo, volo a vela</string>
     <string name="routing_profile_geocoding">Geocodifica</string>
     <string name="routing_profile_broutrer">BRouter (offline)</string>
-    <string name="default_speed_dialog_msg">Utilizzata per calcolare l\'ora di arrivo prevista</string>
     <string name="osmand_default_routing">Calcolo percorso OsmAnd</string>
     <string name="custom_routing">Profilo personalizzato di calcolo del percorso</string>
     <string name="routing_attr_piste_type_downhill_name">Sci alpino/sci downhill</string>
