@@ -583,7 +583,7 @@ public class ConfigureMapMenu {
 							items[i] = OsmandSettings.DayNightMode.values()[i].toHumanString(activity
 									.getMyApplication());
 						}
-						
+
 						SunriseSunset sunriseSunset = activity.getMyApplication().getDaynightHelper().getSunriseSunset();
 						if (sunriseSunset != null) {
 							DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
