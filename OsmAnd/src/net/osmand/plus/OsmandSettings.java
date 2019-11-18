@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.util.Pair;
@@ -149,7 +150,6 @@ public class OsmandSettings {
 
 	/// Settings variables
 	private final OsmandApplication ctx;
-	private PreferencesDataStore dataStore;
 	private SettingsAPI settingsAPI;
 	private Object defaultProfilePreferences;
 	private Object globalPreferences;
@@ -166,7 +166,6 @@ public class OsmandSettings {
 	protected OsmandSettings(OsmandApplication clientContext, SettingsAPI settinsAPI) {
 		ctx = clientContext;
 		this.settingsAPI = settinsAPI;
-		dataStore = new PreferencesDataStore();
 		initPrefs();
 	}
 
@@ -174,7 +173,6 @@ public class OsmandSettings {
 		ctx = clientContext;
 		this.settingsAPI = settinsAPI;
 		CUSTOM_SHARED_PREFERENCES_NAME = CUSTOM_SHARED_PREFERENCES_PREFIX + sharedPreferencesName;
-		dataStore = new PreferencesDataStore();
 		initPrefs();
 		setCustomized();
 	}
@@ -210,8 +208,8 @@ public class OsmandSettings {
 		return settingsAPI;
 	}
 
-	public PreferencesDataStore getDataStore() {
-		return dataStore;
+	public PreferencesDataStore getDataStore(@Nullable ApplicationMode appMode) {
+		return new PreferencesDataStore(appMode != null ? appMode : APPLICATION_MODE.get());
 	}
 
 	public static String getSharedPreferencesName(ApplicationMode mode) {
@@ -238,8 +236,14 @@ public class OsmandSettings {
 			OsmandPreference pref = getPreference(key);
 			if (pref instanceof CommonPreference) {
 				CommonPreference commonPreference = (CommonPreference) pref;
-				if (!commonPreference.global && !commonPreference.isSetForMode(ApplicationMode.DEFAULT)) {
-					boolean valueSaved = setPreference(key, map.get(key), ApplicationMode.DEFAULT);
+				if (!commonPreference.global) {
+					List<ApplicationMode> modes = commonPreference.general ? Collections.singletonList(ApplicationMode.DEFAULT) : ApplicationMode.allPossibleValues();
+					boolean valueSaved = false;
+					for (ApplicationMode mode : modes) {
+						if (!commonPreference.isSetForMode(mode)) {
+							valueSaved = setPreference(key, map.get(key), mode) || valueSaved;
+						}
+					}
 					if (valueSaved) {
 						settingsAPI.edit(globalPreferences).remove(key).commit();
 					}
@@ -996,10 +1000,24 @@ public class OsmandSettings {
 	public static final String NUMBER_OF_FREE_DOWNLOADS_ID = "free_downloads_v3";
 
 	// this value string is synchronized with settings_pref.xml preference name
-	private final OsmandPreference<String> PLUGINS = new StringPreference("enabled_plugins", MapillaryPlugin.ID).makeProfile();
+	private final OsmandPreference<String> PLUGINS = new StringPreference("enabled_plugins", MapillaryPlugin.ID) {
+		@Override
+		public String getProfileDefaultValue(ApplicationMode mode) {
+			ApplicationMode parent = mode.getParent();
+			if (parent != null && isSetForMode(parent)) {
+				return getModeValue(parent);
+			} else {
+				return super.getProfileDefaultValue(mode);
+			}
+		}
+	}.makeProfile();
 
 	public Set<String> getEnabledPlugins() {
-		String plugs = PLUGINS.get();
+		return getEnabledPluginsForMode(APPLICATION_MODE.get());
+	}
+
+	public Set<String> getEnabledPluginsForMode(ApplicationMode mode) {
+		String plugs = PLUGINS.getModeValue(mode);
 		StringTokenizer toks = new StringTokenizer(plugs, ",");
 		Set<String> res = new LinkedHashSet<String>();
 		while (toks.hasMoreTokens()) {
@@ -1012,7 +1030,11 @@ public class OsmandSettings {
 	}
 
 	public Set<String> getPlugins() {
-		String plugs = PLUGINS.get();
+		return getPluginsForMode(APPLICATION_MODE.get());
+	}
+
+	public Set<String> getPluginsForMode(ApplicationMode mode) {
+		String plugs = PLUGINS.getModeValue(mode);
 		StringTokenizer toks = new StringTokenizer(plugs, ",");
 		Set<String> res = new LinkedHashSet<String>();
 		while (toks.hasMoreTokens()) {
@@ -1021,8 +1043,12 @@ public class OsmandSettings {
 		return res;
 	}
 
-	public void enablePlugin(String pluginId, boolean enable) {
-		Set<String> set = getPlugins();
+	public boolean enablePlugin(String pluginId, boolean enable) {
+		return enablePluginForMode(pluginId, enable, APPLICATION_MODE.get());
+	}
+
+	public boolean enablePluginForMode(String pluginId, boolean enable, ApplicationMode mode) {
+		Set<String> set = getPluginsForMode(mode);
 		if (enable) {
 			set.remove("-" + pluginId);
 			set.add(pluginId);
@@ -1038,9 +1064,10 @@ public class OsmandSettings {
 				serialization.append(",");
 			}
 		}
-		if (!serialization.toString().equals(PLUGINS.get())) {
-			PLUGINS.set(serialization.toString());
+		if (!serialization.toString().equals(PLUGINS.getModeValue(mode))) {
+			return PLUGINS.setModeValue(mode, serialization.toString());
 		}
+		return false;
 	}
 
 
@@ -1130,8 +1157,13 @@ public class OsmandSettings {
 	public final CommonPreference<String> API_NAV_DRAWER_ITEMS_JSON = new StringPreference("api_nav_drawer_items_json", "{}").makeGlobal();
 	public final CommonPreference<String> API_CONNECTED_APPS_JSON = new StringPreference("api_connected_apps_json", "[]") {
 		@Override
-		public String getModeValue(ApplicationMode mode) {
-			return getValue(getProfilePreferences(mode), "[]");
+		public String getProfileDefaultValue(ApplicationMode mode) {
+			ApplicationMode parent = mode.getParent();
+			if (parent != null && isSetForMode(parent)) {
+				return getModeValue(parent);
+			} else {
+				return super.getProfileDefaultValue(mode);
+			}
 		}
 	}.makeProfile();
 
@@ -1399,6 +1431,7 @@ public class OsmandSettings {
 	public final OsmandPreference<Boolean> USE_KALMAN_FILTER_FOR_COMPASS = new BooleanPreference("use_kalman_filter_compass", true).makeProfile().makeGeneral().cache();
 
 	public final OsmandPreference<Boolean> DO_NOT_SHOW_STARTUP_MESSAGES = new BooleanPreference("do_not_show_startup_messages", false).makeGlobal().cache();
+	public final OsmandPreference<Boolean> SHOW_DOWNLOAD_MAP_DIALOG = new BooleanPreference("show_download_map_dialog", true).makeGlobal().cache();
 	public final OsmandPreference<Boolean> DO_NOT_USE_ANIMATIONS = new BooleanPreference("do_not_use_animations", false).makeProfile().makeGeneral().cache();
 
 	public final OsmandPreference<Boolean> SEND_ANONYMOUS_MAP_DOWNLOADS_DATA = new BooleanPreference("send_anonymous_map_downloads_data", false).makeGlobal().cache();
@@ -3191,9 +3224,12 @@ public class OsmandSettings {
 
 
 	public boolean isLightContent() {
-		return OSMAND_THEME.get() != OSMAND_DARK_THEME;
+		return isLightContentForMode(APPLICATION_MODE.get());
 	}
 
+	public boolean isLightContentForMode(ApplicationMode mode) {
+		return OSMAND_THEME.getModeValue(mode) != OSMAND_DARK_THEME;
+	}
 
 	public final CommonPreference<Boolean> FLUORESCENT_OVERLAYS =
 			new BooleanPreference("fluorescent_overlays", false).makeGlobal().cache();
@@ -3484,38 +3520,44 @@ public class OsmandSettings {
 
 	public class PreferencesDataStore extends PreferenceDataStore {
 
+		private ApplicationMode appMode;
+
+		public PreferencesDataStore(@NonNull ApplicationMode appMode) {
+			this.appMode = appMode;
+		}
+
 		@Override
 		public void putString(String key, @Nullable String value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		@Override
 		public void putStringSet(String key, @Nullable Set<String> values) {
-			setPreference(key, values);
+			setPreference(key, values, appMode);
 		}
 
 		@Override
 		public void putInt(String key, int value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		@Override
 		public void putLong(String key, long value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		@Override
 		public void putFloat(String key, float value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		@Override
 		public void putBoolean(String key, boolean value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		public void putValue(String key, Object value) {
-			setPreference(key, value);
+			setPreference(key, value, appMode);
 		}
 
 		@Nullable
@@ -3523,9 +3565,9 @@ public class OsmandSettings {
 		public String getString(String key, @Nullable String defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference instanceof StringPreference) {
-				return ((StringPreference) preference).get();
+				return ((StringPreference) preference).getModeValue(appMode);
 			} else {
-				Object value = preference.get();
+				Object value = preference.getModeValue(appMode);
 				if (value != null) {
 					return value.toString();
 				}
@@ -3543,7 +3585,7 @@ public class OsmandSettings {
 		public int getInt(String key, int defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference instanceof IntPreference) {
-				return ((IntPreference) preference).get();
+				return ((IntPreference) preference).getModeValue(appMode);
 			}
 			return defValue;
 		}
@@ -3552,7 +3594,7 @@ public class OsmandSettings {
 		public long getLong(String key, long defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference instanceof LongPreference) {
-				return ((LongPreference) preference).get();
+				return ((LongPreference) preference).getModeValue(appMode);
 			}
 			return defValue;
 		}
@@ -3561,7 +3603,7 @@ public class OsmandSettings {
 		public float getFloat(String key, float defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference instanceof FloatPreference) {
-				return ((FloatPreference) preference).get();
+				return ((FloatPreference) preference).getModeValue(appMode);
 			}
 			return defValue;
 		}
@@ -3570,7 +3612,7 @@ public class OsmandSettings {
 		public boolean getBoolean(String key, boolean defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference instanceof BooleanPreference) {
-				return ((BooleanPreference) preference).get();
+				return ((BooleanPreference) preference).getModeValue(appMode);
 			}
 			return defValue;
 		}
@@ -3579,7 +3621,7 @@ public class OsmandSettings {
 		public Object getValue(String key, Object defValue) {
 			OsmandPreference preference = getPreference(key);
 			if (preference != null) {
-				return preference.get();
+				return preference.getModeValue(appMode);
 			}
 			return defValue;
 		}

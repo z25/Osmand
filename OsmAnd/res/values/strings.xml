@@ -11,6 +11,17 @@
 	Thx - Hardy
 
 -->
+    <string name="rendering_attr_showCycleNodeNetworkRoutes_name">Show node network cycle routes</string>
+    <string name="download_map_dialog">Download map dialog</string>
+    <string name="dialogs_and_notifications_title">Dialogs and notifications</string>
+    <string name="dialogs_and_notifications_descr">Control popups, dialogs and notifications that OsmAnd show during usage.</string>
+    <string name="suggested_maps">Suggested maps</string>
+    <string name="suggested_maps_descr">Those maps are required to use with plugin</string>
+    <string name="added_profiles">Added profiles</string>
+    <string name="added_profiles_descr">Plugin adds new profile to OsmAnd</string>
+    <string name="shared_string_turn_off">Turn off</string>
+    <string name="new_plugin_added">New plugin added</string>
+    <string name="clear_confirmation_msg">Clear %1$s?</string>
     <string name="shared_string_revert">Revert</string>
     <string name="track_saved">Track saved</string>
     <string name="empty_filename">File name is empty</string>
@@ -880,6 +891,7 @@
     <string name="quick_action_replace_destination">Replace destination</string>
     <string name="quick_action_add_first_intermediate">Add first intermediate</string>
     <string name="quick_action_add_destination_desc">A button to make the screen center the route destination, any previously selected destination becomes the last intermediate destination.</string>
+    <string name="quick_action_directions_from_desc">A button to make the screen center the point of departure and calculate route to the destination or open a dialog to select destination if the destination marker is not on the map.</string>
     <string name="quick_action_replace_destination_desc">Tapping this action button makes the screen center the new route destination, replacing the previously selected destination (if any).</string>
     <string name="quick_action_add_first_intermediate_desc">A button to make the screen center the first intermediate destination.</string>
     <string name="no_overlay">No overlay</string>

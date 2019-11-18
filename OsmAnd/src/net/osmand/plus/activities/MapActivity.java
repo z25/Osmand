@@ -798,6 +798,7 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 
 		readLocationToShow();
 
+		OsmandPlugin.checkInstalledMarketPlugins(app, this);
 		OsmandPlugin.onMapActivityResume(this);
 
 		boolean showOsmAndWelcomeScreen = true;
@@ -2084,9 +2085,11 @@ public class MapActivity extends OsmandActionBarActivity implements DownloadEven
 		try {
 			String fragmentName = pref.getFragment();
 			Fragment fragment = Fragment.instantiate(this, fragmentName);
-
+			if (caller instanceof BaseSettingsFragment) {
+				fragment.setArguments(((BaseSettingsFragment) caller).buildArguments());
+			}
 			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.fragmentContainer, fragment, fragment.getClass().getSimpleName())
+					.replace(R.id.fragmentContainer, fragment, fragment.getClass().getName())
 					.addToBackStack(DRAWER_SETTINGS_ID + ".new")
 					.commit();
 

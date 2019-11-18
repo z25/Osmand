@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,6 @@ import net.osmand.plus.OsmandApplication;
 import net.osmand.plus.OsmandSettings;
 import net.osmand.plus.R;
 import net.osmand.plus.activities.MapActivity;
-import net.osmand.plus.activities.SettingsBaseActivity;
-import net.osmand.plus.activities.SettingsNavigationActivity;
 import net.osmand.plus.base.MenuBottomSheetDialogFragment;
 import net.osmand.plus.base.bottomsheetmenu.BaseBottomSheetItem;
 import net.osmand.plus.base.bottomsheetmenu.BottomSheetItemWithCompoundButton;
@@ -42,6 +41,7 @@ import net.osmand.plus.routepreparationmenu.RoutingOptionsHelper.ShowAlongTheRou
 import net.osmand.plus.routepreparationmenu.RoutingOptionsHelper.TimeConditionalRoutingItem;
 import net.osmand.plus.routing.RouteProvider;
 import net.osmand.plus.routing.RoutingHelper;
+import net.osmand.plus.settings.BaseSettingsFragment;
 import net.osmand.router.GeneralRouter;
 
 import java.io.File;
@@ -301,10 +301,9 @@ public class RouteOptionsBottomSheet extends MenuBottomSheetDialogFragment {
 				.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						final Intent settings = new Intent(mapActivity, SettingsNavigationActivity.class);
-						settings.putExtra(SettingsNavigationActivity.INTENT_SKIP_DIALOG, true);
-						settings.putExtra(SettingsBaseActivity.INTENT_APP_MODE, routingHelper.getAppMode().getStringKey());
-						mapActivity.startActivity(settings);
+						dismiss();
+						BaseSettingsFragment.showInstance(mapActivity, BaseSettingsFragment.SettingsScreenType.NAVIGATION,
+								mapActivity.getRoutingHelper().getAppMode());
 					}
 				})
 				.create();
@@ -426,9 +425,9 @@ public class RouteOptionsBottomSheet extends MenuBottomSheetDialogFragment {
 		}, nightMode);
 	}
 
-	private void showOptionsMenu(final TextView gpxSpinner) {
+	private void showOptionsMenu(View view) {
 		RouteProvider.GPXRouteParamsBuilder rp = mapActivity.getRoutingHelper().getCurrentGPXRoute();
-		final PopupMenu optionsMenu = new PopupMenu(gpxSpinner.getContext(), gpxSpinner);
+		final PopupMenu optionsMenu = new PopupMenu(new ContextThemeWrapper(view.getContext(), themeRes), view);
 		MenuItem item = optionsMenu.getMenu().add(
 				mapActivity.getString(R.string.shared_string_none));
 		item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

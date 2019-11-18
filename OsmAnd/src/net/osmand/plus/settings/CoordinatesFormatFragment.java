@@ -53,7 +53,7 @@ public class CoordinatesFormatFragment extends BaseSettingsFragment {
 		utmPref.setSummary(getCoordinatesFormatSummary(loc, PointDescription.UTM_FORMAT));
 		olcPref.setSummary(getCoordinatesFormatSummary(loc, PointDescription.OLC_FORMAT));
 
-		int currentFormat = settings.COORDINATES_FORMAT.get();
+		int currentFormat = settings.COORDINATES_FORMAT.getModeValue(getSelectedAppMode());
 		String currentPrefKey = getCoordinatesKeyForFormat(currentFormat);
 		updateSelectedFormatPrefs(currentPrefKey);
 	}
@@ -121,7 +121,8 @@ public class CoordinatesFormatFragment extends BaseSettingsFragment {
 
 				FragmentManager fragmentManager = getFragmentManager();
 				if (fragmentManager != null) {
-					ChangeGeneralProfilesPrefBottomSheet.showInstance(fragmentManager, settings.COORDINATES_FORMAT.getId(), newFormat, this, false);
+					ChangeGeneralProfilesPrefBottomSheet.showInstance(fragmentManager,
+							settings.COORDINATES_FORMAT.getId(), newFormat, this, false, getSelectedAppMode());
 				}
 			}
 		}
