@@ -51,9 +51,9 @@
     <string name="si_mi_yard">マイル/ヤード</string>
     <string name="si_km_m">キロメートル/メートル</string>
     <string name="yard">ヤード</string>
-    <string name="foot">ft</string>
+    <string name="foot">フィート</string>
     <string name="mile_per_hour">mph</string>
-    <string name="mile">mi</string>
+    <string name="mile">マイル</string>
     <string name="send_location_way_choose_title">次の方法で位置を共有</string>
     <string name="send_location_sms_pattern">位置 : %1$s\n%2$s</string>
     <string name="send_location_email_pattern">位置を見るには
@@ -89,9 +89,9 @@
     <string name="indexing_poi">POIを索引中…</string>
     <string name="indexing_transport">交通機関を索引化…</string>
     <string name="shared_string_io_error">I/O エラー発生</string>
-    <string name="km">km</string>
+    <string name="km">キロメートル</string>
     <string name="km_h">km/h</string>
-    <string name="m">m</string>
+    <string name="m">メートル</string>
     <string name="old_map_index_is_not_supported">重複したマップ
 データ形式 \'\'{0}\'\' はサポートされていません</string>
     <string name="poi_filter_car_aid">自動車用施設</string>
@@ -608,7 +608,7 @@ POIの更新は利用できません</string>
     <string name="av_def_action_choose">ウィジェット起動毎に選択</string>
     <string name="av_def_action_video">動画を撮影</string>
     <string name="av_def_action_audio">音声を録音</string>
-    <string name="av_widget_action_descr">ウィジェットボタンのデフォルト動作:</string>
+    <string name="av_widget_action_descr">AVウィジェットボタン(音声・動画・写真で残すメモ機能)のデフォルト動作を指定します。</string>
     <string name="av_widget_action">ウィジェット機能のデフォルト設定</string>
     <string name="av_video_format_descr">動画の出力形式:</string>
     <string name="av_video_format">動画出力形式</string>
@@ -836,7 +836,7 @@ POIの更新は利用できません</string>
     <string name="accessibility_mode">アクセシビリティモード</string>
     <string name="accessibility_mode_descr">アクセシビリティ(ユーザー補助)機能を設定します</string>
     <string name="shared_string_on">有効</string>
-    <string name="shared_string_off">無効</string>
+    <string name="shared_string_off">OFF</string>
     <string name="accessibility_default">デバイス側のユーザー補助設定に従う</string>
     <string name="backToMenu">メニューに戻る</string>
     <string name="zoomOut">縮小</string>
@@ -1320,7 +1320,7 @@ POIの更新は利用できません</string>
     <string name="navigation_intent_invalid">無効なフォーマット: %s</string>
     <string name="route_descr_destination">目的地</string>
     <string name="index_tours">旅行</string>
-    <string name="shared_string_all">全て</string>
+    <string name="shared_string_all">すべて</string>
     <string name="shared_string_waypoints">経由地点</string>
     <string name="way_alarms">通行に関する警告</string>
     <string name="speak_favorites">周辺のお気に入り</string>
@@ -1340,7 +1340,7 @@ POIの更新は利用できません</string>
     <string name="distance">距離</string>
     <string name="rendering_attr_publicTransportMode_name">バス、トロリーバス、シャトルバス路線</string>
     <string name="save_track_to_gpx_globally">GPXファイルへの経路記録に関する設定</string>
-    <string name="save_track_to_gpx_globally_descr">GPXファイルへの一般の位置(General position)記録は、マップ画面上のGPXログウィジェットを使用してオンとオフを切り替えることが可能です</string>
+    <string name="save_track_to_gpx_globally_descr">GPXファイルへ記録される位置情報全般は、マップ画面上のGPXログウィジェットを使用してONとOFFを切り替えることが可能です。</string>
     <string name="save_track_interval_globally">記録間隔</string>
     <string name="confirm_every_run">常に尋ねる</string>
     <string name="save_global_track_interval_descr">標準的な経路の記録間隔を選択します(マップ上のGPXログウィジェットで有効化)</string>
@@ -1695,11 +1695,11 @@ POIの更新は利用できません</string>
     <string name="favorite_category_select">カテゴリを選択</string>
     <string name="default_speed_system_descr">速度の単位を設定します</string>
     <string name="default_speed_system">速度の単位</string>
-    <string name="nm">nmi</string>
+    <string name="nm">海里</string>
     <string name="si_nm">海里</string>
-    <string name="si_kmh">キロメートル毎時(km/h)</string>
-    <string name="si_mph">マイル毎時(mph・mi/h)</string>
-    <string name="si_m_s">メートル毎秒(m/s)</string>
+    <string name="si_kmh">キロメートル毎時</string>
+    <string name="si_mph">マイル毎時</string>
+    <string name="si_m_s">メートル毎秒</string>
     <string name="si_min_km">キロメートル毎分(km/min)</string>
     <string name="si_min_m">マイル毎分(mi/min)</string>
     <string name="si_nm_h">海里毎時(ノット)</string>
@@ -3055,9 +3055,9 @@ POIの更新は利用できません</string>
     <string name="app_mode_offroad">オフロード</string>
     <string name="edit_profile_setup_title">プロファイルの個別設定</string>
     <string name="edit_profile_setup_subtitle">設定した値は各プロファイルごとに保持されます</string>
-    <string name="edit_profile_setup_map_subtitle">このプロファイルで使用するマップ設定を選択します</string>
-    <string name="edit_profile_screen_options_subtitle">このプロファイルで使用するマップ設定を選択します</string>
-    <string name="edit_profile_nav_settings_subtitle">このプロファイルで使用するナビゲーション設定を選択します</string>
+    <string name="edit_profile_setup_map_subtitle">指定プロファイルのマップ設定を行います</string>
+    <string name="edit_profile_screen_options_subtitle">指定プロファイルのUI(ユーザーインターフェース)設定を行います</string>
+    <string name="edit_profile_nav_settings_subtitle">指定プロファイルのナビゲーション設定を行います</string>
     <string name="routing_attr_max_num_changes_description">乗り換えの上限を指定します</string>
     <string name="routing_attr_max_num_changes_name">乗り換え数</string>
     <string name="turn_screen_on_router">方向転換時に起動</string>
@@ -3111,8 +3111,8 @@ POIの更新は利用できません</string>
 \n\'設定\'→\'プライバシーとセキュリティ\'からいつでも設定を変更できます。</string>
     <string name="choose_data_to_share">共有するデータの種類を選択:</string>
     <string name="collected_data_descr">OsmAndで共有を許可するデータを定義します。</string>
-    <string name="downloaded_maps_collect_descr">どの国や地域の地図が需要が高いのかを把握するのに役立ちます。</string>
-    <string name="visited_screens_collect_descr">どのOsmAnd機能の需要が高いのかを把握するのに役立ちます。</string>
+    <string name="downloaded_maps_collect_descr">どの国や地域の地図の需要が高いのかを把握するのに役立ちます。</string>
+    <string name="visited_screens_collect_descr">OsmAndのどの機能の需要が高いのかを把握するのに役立ちます。</string>
     <string name="privacy_and_security_change_descr">%1$sに同意する場合は、[許可]をタップします</string>
     <string name="shared_string_no_thank_you">いいえ、結構です</string>
     <string name="shared_string_allow">許可</string>
