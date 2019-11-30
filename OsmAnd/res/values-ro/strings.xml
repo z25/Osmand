@@ -2396,13 +2396,13 @@
     <string name="quick_action_show_hide_hillshade">Afişează/ascunde umbrele</string>
     <string name="tts_initialization_error">Motorul text-to-speech nu porneste.</string>
     <string name="export_profile">Exportă profilul</string>
-    <string name="exported_osmand_profile">Profil osmand exportat</string>
-    <string name="overwrite_profile_q">Profil deja existent, îl rescrii\?</string>
+    <string name="exported_osmand_profile">Profil osmand exportat %1$s</string>
+    <string name="overwrite_profile_q">Profil \'%1$s\' deja existent, îl rescrii\?</string>
     <string name="export_profile_failed">Profilul nu se poate exporta.</string>
     <string name="profile_import">Importa profilul:</string>
     <string name="profile_import_descr">"Pentru a importa profilul, selectează fisierul din  aparat, si deschide-l cu OsmAnd."</string>
-    <string name="file_import_error">Eroare de incarcare al fisierului.</string>
-    <string name="file_imported_successfully">Fisier Incarcat cu succes.</string>
+    <string name="file_import_error">Eroare de incarcare al fisierului. %1$s: %2$s</string>
+    <string name="file_imported_successfully">%1$s Incarcat cu succes.</string>
     <string name="rendering_value_white_name">Alb</string>
     <string name="route_start_point">Punct de plecare</string>
     <string name="unirs_render_descr">Modifica stilul implicit pentru a crește contrastul dintre drumurile pietonale și biciclete. Utilizează culori Mapnik.</string>
