@@ -819,7 +819,6 @@ Lon %2$s</string>
 \n aplicación en modo reposo</string>
     <string name="bg_service_sleep_mode_on">Parar
 \n servicio en modo reposo</string>
-    <string name="gps_wakeup_interval">Intervalo de activación del GPS: %s</string>
     <string name="int_continuosly">Continuamente</string>
     <string name="screen_is_locked">Pulsar el icono del candado para desbloquear</string>
     <string name="map_widget_top_text">Nombre de calle</string>
@@ -1169,7 +1168,6 @@ Lon %2$s</string>
     <string name="create_poi_link_to_osm_doc">
         <u>OSM en línea</u> clasificación de mapa con imágenes.</string>
     <string name="error_doing_search">No se pudo realizar la búsqueda sin conexión.</string>
-    <string name="search_offline_geo_error">No se pudo analizar el filtro «%s».</string>
     <string name="search_osm_offline">Buscar ubicación geográfica</string>
     <string name="system_locale">Sistema</string>
     <string name="preferred_locale_descr">Idioma de la aplicación (surte efecto al reiniciar OsmAnd).</string>
@@ -2032,7 +2030,6 @@ Lon %2$s</string>
     <string name="first_usage_greeting">Obtén direcciones y descubre lugares nuevos sin una conexión a Internet</string>
     <string name="si_mi_meters">Millas/metros</string>
     <string name="get_for">Obtener por %1$s</string>
-    <string name="get_for_month">Obtener por %1$s al mes</string>
     <string name="osm_live_banner_desc">Obtenga descargas ilimitadas de mapas, añadiendo actualizaciones semanales, diarias o incluso por hora.</string>
     <string name="osmand_plus_banner_desc">Descargas ilimitadas de mapas, actualizaciones y complemento de Wikipedia.</string>
     <string name="get_it">Obtener</string>
@@ -2145,10 +2142,10 @@ Lon %2$s</string>
     <string name="quick_action_duplicate">Nombre de la acción rápida duplicado</string>
     <string name="quick_action_showhide_favorites_descr">Un botón que muestra u oculta los Favoritos en el mapa.</string>
     <string name="quick_action_showhide_poi_descr">Un botón que muestra u oculta los PDI en el mapa.</string>
-    <string name="quick_action_showhide_favorites_title">Alternar vista de Favoritos</string>
+    <string name="quick_action_showhide_favorites_title">Mostrar/ocultar Favoritos</string>
     <string name="quick_action_favorites_show">Mostrar Favoritos</string>
     <string name="quick_action_favorites_hide">Ocultar Favoritos</string>
-    <string name="quick_action_showhide_poi_title">Alternar vista de PDI</string>
+    <string name="quick_action_showhide_poi_title">Mostrar/ocultar PDI</string>
     <string name="quick_action_poi_show">Mostrar %1$s</string>
     <string name="quick_action_poi_hide">Ocultar %1$s</string>
     <string name="quick_action_add_category">Añadir una categoría</string>
@@ -2579,8 +2576,6 @@ Lon %2$s</string>
     <string name="shared_string_left">Izquierda</string>
     <string name="show_number_pad">Mostrar teclado numérico</string>
     <string name="shared_string_paste">Pegar</string>
-    <string name="coordinate_input_accuracy_description">Cambiar automáticamente al campo siguiente al ingresar %1$d dígitos decimales.</string>
-    <string name="coordinate_input_accuracy">%1$d dígitos</string>
     <string name="go_to_next_field">Siguiente campo</string>
     <string name="add_track_to_markers_descr">Elige una traza para añadir sus puntos de referencia a los marcadores.</string>
     <string name="add_favourites_group_to_markers_descr">Elige una categoría de Favoritos para añadir a los marcadores.</string>
@@ -2657,7 +2652,7 @@ Lon %2$s</string>
     <string name="copy_location_name">Copiar nombre de ubicación/PDI</string>
     <string name="toast_empty_name_error">Ubicación sin nombre</string>
     <string name="show_closed_notes">Mostrar notas de OSM cerradas</string>
-    <string name="switch_osm_notes_visibility_desc">Alternar vista de notas de OSM en el mapa.</string>
+    <string name="switch_osm_notes_visibility_desc">Mostrar/ocultar notas de OSM en el mapa.</string>
     <string name="gpx_file_desc">GPX - adecuado para exportar a JOSM u otros editores OSM.</string>
     <string name="osc_file_desc">OSC - adecuado para exportar a OpenStreetMap.</string>
     <string name="shared_string_gpx_file">Archivo GPX</string>
@@ -2735,7 +2730,6 @@ Lon %2$s</string>
     <string name="in_app_purchase_desc">Único pago</string>
     <string name="in_app_purchase_desc_ex">Una vez comprado, estará permanentemente disponible para ti.</string>
     <string name="purchase_unlim_title">Comprar - %1$s</string>
-    <string name="purchase_subscription_title">Suscripción - %1$s</string>
     <string name="wikivoyage_offline">Wikiviajes sin conexión</string>
     <string name="unlimited_downloads">Descargas ilimitadas</string>
     <string name="wikipedia_offline">Wikipedia sin conexión</string>
@@ -3227,7 +3221,6 @@ Lon %2$s</string>
     <string name="months_3">Tres meses</string>
     <string name="price_free">Gratis</string>
     <string name="get_discount_title">Obtén %1$d %2$s a %3$s de descuento.</string>
-    <string name="get_free_trial_title">Iniciar prueba gratuita de %1$d %2$s.</string>
     <string name="get_discount_first_part">%1$s durante el primer %2$s</string>
     <string name="get_discount_first_few_part">%1$s para el primer %2$s</string>
     <string name="get_discount_second_part">luego %1$s</string>
@@ -3336,7 +3329,7 @@ Lon %2$s</string>
     <string name="shared_string_memory_used_gb_desc">Usado %1$s GB</string>
     <string name="shared_string_memory_used_mb_desc">Usado %1$s MB</string>
     <string name="shared_string_memory_used_kb_desc">Usado %1$s kB</string>
-    <string name="contour_lines_and_hillshade">Curvas de nivel y sombreados</string>
+    <string name="contour_lines_and_hillshade">Curvas de nivel y sombreado</string>
     <string name="routing_attr_prefer_unpaved_name">Preferir caminos sin pavimentar</string>
     <string name="routing_attr_prefer_unpaved_description">Prefiere caminos sin pavimentar.</string>
     <string name="update_all_maps">Actualizar todos los mapas</string>
@@ -3366,11 +3359,11 @@ Lon %2$s</string>
     <string name="quick_action_contour_lines_descr">Un botón que muestra u oculta las curvas de nivel en el mapa.</string>
     <string name="quick_action_contour_lines_show">Mostrar curvas de nivel</string>
     <string name="quick_action_contour_lines_hide">Ocultar curvas de nivel</string>
-    <string name="quick_action_show_hide_contour_lines">Alternar curvas de nivel</string>
+    <string name="quick_action_show_hide_contour_lines">Mostrar/ocultar curvas de nivel</string>
     <string name="quick_action_hillshade_descr">Un botón que muestra u oculta la sombra de una colina en el mapa.</string>
-    <string name="quick_action_hillshade_show">Mostrar sombreados</string>
-    <string name="quick_action_hillshade_hide">Ocultar sombreados</string>
-    <string name="quick_action_show_hide_hillshade">Alternar sombreados</string>
+    <string name="quick_action_hillshade_show">Mostrar sombreado</string>
+    <string name="quick_action_hillshade_hide">Ocultar sombreado</string>
+    <string name="quick_action_show_hide_hillshade">Mostrar/ocultar sombreado</string>
     <string name="tts_initialization_error">Imposible iniciar el motor de habla sintetizada</string>
     <string name="simulate_your_location_gpx_descr">Simular la ubicación usando una traza GPX grabada.</string>
     <string name="export_profile">Exportar perfil</string>
@@ -3381,7 +3374,6 @@ Lon %2$s</string>
     <string name="profile_import_descr">Para importar un perfil, elige el archivo en el dispositivo y ábrelo con OsmAnd.</string>
     <string name="file_import_error">Error de importación de %1$s: %2$s</string>
     <string name="file_imported_successfully">%1$s importados con éxito.</string>
-    <string name="swap_start_and_destination">Alternar inicio y destino</string>
     <string name="rendering_value_white_name">Blanco</string>
     <string name="swap_two_places">Alternar %1$s y %2$s</string>
     <string name="route_start_point">Punto de partida</string>
@@ -3403,4 +3395,7 @@ Lon %2$s</string>
     <string name="shared_string_turn_off">Apagar</string>
     <string name="new_plugin_added">Nuevo complemento añadido</string>
     <string name="join_segments">Unir segmentos</string>
+    <string name="add_new_profile_q">¿Añadir el nuevo perfil «%1$s»\?</string>
+    <string name="save_heading">Incluir rumbo</string>
+    <string name="save_heading_descr">Guarda el rumbo para cada punto de la traza durante la grabación.</string>
 </resources>
